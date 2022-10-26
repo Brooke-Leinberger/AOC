@@ -20,9 +20,9 @@ namespace TwentyOne
             if(test)
                 input = FileCsv("../../../test.txt");
             else
-                input = WebCsv("https://adventofcode.com/2021/day/2/input");
+                input = WebCsv("https://adventofcode.com/2021/day/3/input");
             
-            Console.WriteLine(Day2.part2(input));
+            Console.WriteLine(Day3.part2(input));
         }
 
         
