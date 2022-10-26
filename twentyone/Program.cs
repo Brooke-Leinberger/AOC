@@ -7,15 +7,22 @@ using System.Net;
 using System.Text.RegularExpressions;
 using System.Text.Json;
 
+
 namespace TwentyOne
 {
     internal class Program
     {
         public static void Main(string[] args)
         {
-            //Console.WriteLine("Result: " + Day1.execute(WebCsv(Console.ReadLine())));
-            string[] input = WebCsv("https://adventofcode.com/2021/day/1/input");
-            Console.WriteLine(Day1.part2(input));
+            const bool test = false;
+            string[] input;
+            
+            if(test)
+                input = FileCsv("../../../test.txt");
+            else
+                input = WebCsv("https://adventofcode.com/2021/day/2/input");
+            
+            Console.WriteLine(Day2.part2(input));
         }
 
         
@@ -44,33 +51,9 @@ namespace TwentyOne
             return content.Split(delimiter);
         }
 
-        public static string[] ConsoleCsv(uint num = 0, char delimiter = '\n')
+        private static string[] FileCsv(string path, char delimiter = '\n')
         {
-            string lastLine;
-            List<string> lines = new List<string>();
-
-            for (int i = 0; i < num || num == 0; i++)
-            {
-                if(delimiter == '\n')
-                   lastLine = Console.ReadLine();
-                
-                else
-                {
-                    char ch;
-                    lastLine = "";
-                    while ((ch = (char)Console.Read()) != delimiter)
-                    {
-                        lastLine += ch;
-                    }
-                }
-                
-                if (lastLine == "end" || lastLine == "")
-                    break;
-
-                lines.Append(lastLine);
-            }
-
-            return lines.ToArray();
+            return File.ReadAllText(path).Split(delimiter);
         }
     }
 }
