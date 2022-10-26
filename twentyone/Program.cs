@@ -14,15 +14,14 @@ namespace TwentyOne
     {
         public static void Main(string[] args)
         {
-            const bool test = false;
-            string[] input;
+            string[] testInput, realInput;
+
+            var function = Day4.part2;
+            testInput = FileCsv("../../../test.txt");
+            realInput = WebCsv("https://adventofcode.com/2021/day/4/input");
             
-            if(test)
-                input = FileCsv("../../../test.txt");
-            else
-                input = WebCsv("https://adventofcode.com/2021/day/4/input");
-            
-            Console.WriteLine(Day4.part2(input));
+            Console.WriteLine("Test: " + function(testInput));
+            Console.WriteLine("Real: " + function(realInput));
         }
 
         
