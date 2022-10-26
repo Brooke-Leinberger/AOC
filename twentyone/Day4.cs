@@ -2,7 +2,7 @@ namespace TwentyOne;
 
 public class Day4
 {
-    public static int part1(string[] input)
+    public static int[][][] GenerateBoards(string[] input)
     {
         int[] calls = input[0].Split(',').Select(int.Parse).ToArray();
         List<List<int[]>> boards = new List<List<int[]>>();
@@ -16,12 +16,17 @@ public class Day4
                 board++;
                 continue;
             }
-            
+
             boards[board].Add(input[i].Split(' ').Where(c => c != "").Select(int.Parse).ToArray());
         }
 
-        boards = boards.Where(c => c.Count != 0).ToList();
-
+        return boards.Where(c => c.Count != 0).Select(c => c.ToArray()).ToArray();
+    }
+    
+    public static int part1(string[] input)
+    {
+        int[] calls = input[0].Split(',').Select(int.Parse).ToArray();
+        int[][][] boards = GenerateBoards(input);
         int lastCalled;
         HashSet<int> called = new HashSet<int>();
 
@@ -30,7 +35,7 @@ public class Day4
             lastCalled = calls[i];
             called.Add(lastCalled);
 
-            foreach (List<int[]> entry in boards)
+            foreach (int[][] entry in boards)
             {
                 if (WinCondition(entry.ToArray(), called))
                     return CalculateAnswer(entry.ToArray(), called, lastCalled);
@@ -88,5 +93,32 @@ public class Day4
         }
 
         return false;
+    }
+
+    public static int part2(string[] input)
+    {
+        List<int[][]> boards = GenerateBoards(input).ToList();
+        int[] calls = input[0].Split(',').Select(int.Parse).ToArray();
+        HashSet<int> called = new HashSet<int>();
+
+        int index = 0;
+        int lastCalled = 0;
+        while (boards.Count > 0)
+        {
+            lastCalled = calls[index];
+            called.Add(lastCalled);
+            for(int i = 0; i < boards.Count; i++)
+            {
+                if (WinCondition(boards[i], called))
+                {
+                    if (boards.Count == 1)
+                        return CalculateAnswer(boards[0], called, lastCalled);
+                    boards.RemoveAt(i);
+                }
+            }
+            index++;
+        }
+
+        return 0;
     }
 }

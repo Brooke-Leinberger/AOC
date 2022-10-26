@@ -22,7 +22,7 @@ namespace TwentyOne
             else
                 input = WebCsv("https://adventofcode.com/2021/day/4/input");
             
-            Console.WriteLine(Day4.part1(input));
+            Console.WriteLine(Day4.part2(input));
         }
 
         
